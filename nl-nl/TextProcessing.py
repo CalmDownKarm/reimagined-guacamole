@@ -16,7 +16,6 @@ from typing import Tuple, Any
 
 n_cpu = multiprocessing.cpu_count()
 MAX_LENGTH = 256
-TEXT_COL, LABEL_COL = 'text', 'sentiment'
 
 
 class TextProcessor:
@@ -67,7 +66,7 @@ class TextProcessor:
         features = [r[0] for r in result]
         labels = [r[1] for r in result]
 
-        dataset = TensorDataset(torch.tensor(features, dtype=torch.float),
+        dataset = TensorDataset(torch.tensor(features, dtype=torch.long), #float
                                 torch.tensor(labels, dtype=torch.long))
 
         data_loader = DataLoader(dataset,

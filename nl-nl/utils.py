@@ -8,7 +8,7 @@ TEXT_COL, LABEL_COL = 'text', 'sentiment'
 
 def read_sst5(data_dir, colnames=[LABEL_COL, TEXT_COL]):
     datasets = {}
-    for t in ["train_nl", "dev", "test"]:
+    for t in ["train", "dev", "test"]:
         df = pd.read_csv(os.path.join(data_dir, f"sst_{t}.txt"), sep='\t', header=None, names=colnames)
         df[LABEL_COL] = df[LABEL_COL].str.replace('__label__', '')
         df[LABEL_COL] = df[LABEL_COL].astype(int)   # Categorical data type for truth labels
@@ -18,7 +18,7 @@ def read_sst5(data_dir, colnames=[LABEL_COL, TEXT_COL]):
 
 
 def create_dataloader(features, labels, batch_size=32, shuffle=False):
-    dataset = TensorDataset(torch.tensor(features, dtype=torch.float),
+    dataset = TensorDataset(torch.tensor(features, dtype=torch.long), #float
                             torch.tensor(labels, dtype=torch.long))
 
     data_loader = DataLoader(dataset,
